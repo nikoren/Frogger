@@ -15,9 +15,13 @@ var Enemy = function(x, y, speed) {
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
     this.x = this.x + this.speed * dt;
-    // You should multiply any movement by the dt parameter
-    // which will ensure the game runs at the same speed for
-    // all computers.
+
+    if (this.x > 470) {
+        this.x = -70;
+        this.speed = Math.floor(Math.random() * 300 + 50);
+    }
+
+
 };
 
 // Draw the enemy on the screen, required method for game
@@ -25,9 +29,6 @@ Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-// Now write your own player class
-// This class requires an update(), render() and
-// a handleInput() method.
 var Player = function(x, y) {
     this.sprite = 'images/char-boy.png'
     this.x = x;
@@ -36,6 +37,8 @@ var Player = function(x, y) {
 
 Player.prototype.update = function() {
     document.onkeydown = this.handleInput;
+    
+
 }
 
 Player.prototype.render = function() {
@@ -44,53 +47,50 @@ Player.prototype.render = function() {
 
 Player.prototype.handleInput = function(e) {
     if (e.keyCode == '38') {
-        player.y = player.y - 80;
+        player.y = (player.y - 80);
     }
     else if (e.keyCode == '40') {
-        player.y = player.y + 80;
+        console.log(this.y);
+        player.y = (player.y + 80);
     }
     else if (e.keyCode == '37') {
-        player.x = player.x - 100;
+        console.log(player.x);
+        player.x = (player.x - 100);
     }
     else if (e.keyCode == '39') {
-       player.x = player.x + 100;
+       console.log(player.x);
+       player.x = (player.x + 100);
     }
 };
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
-
-
-
-
 let allEnemies = [];
 
-// this code creates an enemy 
+for (let i = 0; i<5; i++) {
 
-// choosing the vertical position 
-let randNumber = Math.floor(Math.random() * 3);
+    // this code creates an enemy 
+    // choosing the vertical position 
+    let randNumber = Math.floor(Math.random() * 3);
 
-if (randNumber == 0) {
-    vertical = 65;    // 65 refers to the top-most row
+    if (randNumber == 0) {
+        vertical = 65;    // the top-most row
+    }
+    else if (randNumber == 1) {
+        vertical = 145;
+    }
+    else {
+    vertical = 225;
+    }
+    // choosing the speed 
+    let speed = Math.floor(Math.random() * 300 + 50);
+
+    allEnemies.push(new Enemy(-70, vertical, speed));
+
 }
-else if (randNumber == 1) {
-    vertical = 145;
-}
-else {
-vertical = 225;
-}
-// choosing the speed 
-let speed = Math.floor(Math.random() * 300 + 50);
-
-
-allEnemies.push(new Enemy(-70, vertical, speed));
-
-
-
 
 let player = new Player(200, 375);
-
 
 
 // This listens for key presses and sends the keys to your
