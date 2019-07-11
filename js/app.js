@@ -43,22 +43,16 @@ Player.prototype.render = function() {
 }
 
 Player.prototype.handleInput = function(e) {
-    e = e || window.event;
-
     if (e.keyCode == '38') {
-        console.log('up');
         player.y = player.y - 80;
     }
     else if (e.keyCode == '40') {
-        console.log('down');
         player.y = player.y + 80;
     }
     else if (e.keyCode == '37') {
-       console.log('left');
         player.x = player.x - 100;
     }
     else if (e.keyCode == '39') {
-       console.log('right');
        player.x = player.x + 100;
     }
 };
@@ -66,6 +60,36 @@ Player.prototype.handleInput = function(e) {
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
+
+
+
+
+let allEnemies = [];
+
+// this code creates an enemy 
+
+// choosing the vertical position 
+let randNumber = Math.floor(Math.random() * 3);
+
+if (randNumber == 0) {
+    vertical = 65;    // 65 refers to the top-most row
+}
+else if (randNumber == 1) {
+    vertical = 145;
+}
+else {
+vertical = 225;
+}
+// choosing the speed 
+let speed = Math.floor(Math.random() * 300 + 50);
+
+
+allEnemies.push(new Enemy(-70, vertical, speed));
+
+
+
+
+let player = new Player(200, 375);
 
 
 
@@ -81,20 +105,3 @@ document.addEventListener('keyup', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
-
-let allEnemies = [];
-const enemy_vertical = [65, 145, 225]
-let randNumber = Math.floor(Math.random() * 3);
-
-if (randNumber == 0) {
-    vertical = 65;
-}
-else if (randNumber == 1) {
-    vertical = 145;
-}
-else {
-    vertical = 225;
-}
-
-allEnemies.push(new Enemy(-70, vertical, 50));
-let player = new Player(200, 375);
