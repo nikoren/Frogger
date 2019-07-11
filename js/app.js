@@ -26,16 +26,18 @@ Enemy.prototype.render = function() {
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
-var Player = function() {
+var Player = function(x, y) {
     this.sprite = 'images/char-boy.png'
-    
+    this.x = x;
+    this.y = y;
 };
 
 Player.prototype.update = function() {
-
+    
 }
 
 Player.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
 
 Player.prototype.handleInput = function() {
@@ -62,5 +64,5 @@ document.addEventListener('keyup', function(e) {
 });
 
 let allEnemies = [];
-allEnemies.push(new Enemy(10, 15));
-let player = new Player();
+allEnemies.push(new Enemy(100, 265));
+let player = new Player(50, 100);
