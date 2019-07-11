@@ -14,7 +14,6 @@ var Enemy = function(x, y, speed) {
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
-    console.log(dt);
     this.x = this.x + this.speed * dt;
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
@@ -36,6 +35,7 @@ var Player = function(x, y) {
 };
 
 Player.prototype.update = function() {
+
     
 }
 
@@ -44,8 +44,22 @@ Player.prototype.render = function() {
 }
 
 Player.prototype.handleInput = function() {
-
-}
+    document.addEventListener('keydown', function(e) {
+        console.log(e.key);
+        if (e.key == 'ArrowLeft') {
+            player.x = player.x - 50;
+        };
+        if (e.key == 'ArrowRight') {
+            player.x = player.x + 50;
+        };
+        if (e.key == 'ArrowDown') {
+            player.y = player.y + 50;
+        };
+        if (e.key == 'ArrowUp') {
+            player.y = player.y - 50;
+        };
+    });
+};
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
