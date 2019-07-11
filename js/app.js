@@ -83,6 +83,18 @@ document.addEventListener('keyup', function(e) {
 });
 
 let allEnemies = [];
+const enemy_vertical = [65, 145, 225]
+let randNumber = Math.floor(Math.random() * 3);
 
-allEnemies.push(new Enemy(100, 225, 50));
+if (randNumber == 0) {
+    vertical = 65;
+}
+else if (randNumber == 1) {
+    vertical = 145;
+}
+else {
+    vertical = 225;
+}
+
+allEnemies.push(new Enemy(-70, vertical, 50));
 let player = new Player(200, 375);
