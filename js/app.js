@@ -19,6 +19,16 @@ Enemy.prototype.update = function(dt) {
     if (this.x > 470) {
         this.x = -70;
         this.speed = Math.floor(Math.random() * 300 + 50);
+        let randNumber = Math.floor(Math.random() * 3);
+        if (randNumber == 0) {
+            this.y = 65;    // the top-most row
+        }
+        else if (randNumber == 1) {
+            this.y = 145;
+        }
+        else {
+            this.y = 225;
+        }
     }
 
 
@@ -47,19 +57,19 @@ Player.prototype.render = function() {
 
 Player.prototype.handleInput = function(e) {
     if (e.keyCode == '38') {
-        player.y = (player.y - 80);
+        player.y = (player.y - 82);   // width of pixels is 82
     }
     else if (e.keyCode == '40') {
         console.log(this.y);
-        player.y = (player.y + 80);
+        player.y = (player.y + 82);
     }
     else if (e.keyCode == '37') {
         console.log(player.x);
-        player.x = (player.x - 100);
+        player.x = (player.x - 101);  // height of pixels is 101 
     }
     else if (e.keyCode == '39') {
        console.log(player.x);
-       player.x = (player.x + 100);
+       player.x = (player.x + 101);
     }
 };
 
