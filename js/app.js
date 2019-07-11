@@ -35,30 +35,32 @@ var Player = function(x, y) {
 };
 
 Player.prototype.update = function() {
-
-    
+    document.onkeydown = this.handleInput;
 }
 
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
 
-Player.prototype.handleInput = function() {
-    document.addEventListener('keydown', function(e) {
-        console.log(e.key);
-        if (e.key == 'ArrowLeft') {
-            player.x = player.x - 50;
-        };
-        if (e.key == 'ArrowRight') {
-            player.x = player.x + 50;
-        };
-        if (e.key == 'ArrowDown') {
-            player.y = player.y + 50;
-        };
-        if (e.key == 'ArrowUp') {
-            player.y = player.y - 50;
-        };
-    });
+Player.prototype.handleInput = function(e) {
+    e = e || window.event;
+
+    if (e.keyCode == '38') {
+        console.log('up');
+        player.y = player.y - 80;
+    }
+    else if (e.keyCode == '40') {
+        console.log('down');
+        player.y = player.y + 80;
+    }
+    else if (e.keyCode == '37') {
+       console.log('left');
+        player.x = player.x - 100;
+    }
+    else if (e.keyCode == '39') {
+       console.log('right');
+       player.x = player.x + 100;
+    }
 };
 
 // Now instantiate your objects.
@@ -83,4 +85,4 @@ document.addEventListener('keyup', function(e) {
 let allEnemies = [];
 
 allEnemies.push(new Enemy(100, 225, 50));
-let player = new Player(200, 300);
+let player = new Player(200, 375);
