@@ -44,11 +44,11 @@ Enemy.prototype.checkCollision = function(x1, x2, y1, y2) {
 }
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
-    console.log(player.x, player.y);
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-var Player = function(x, y) {
+var Player = function(x, y, counter=0) {
+    this.counter = counter;
     this.sprite = 'images/char-boy.png'
     this.x = x;
     this.y = y;
@@ -57,15 +57,15 @@ var Player = function(x, y) {
 Player.prototype.update = function() {
     document.onkeydown = this.handleInput;
     if (this.y < 0) {
+        let new_counter = player.counter + 1;
         setTimeout(function() {
-        player = new Player(200, 375);
+        player = new Player(200, 375, new_counter);
         }, 500);
     }
-    
-
 }
 
 Player.prototype.render = function() {
+    console.log(player.counter);
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
 
@@ -128,7 +128,6 @@ document.addEventListener('keyup', function(e) {
         39: 'right',
         40: 'down'
     };
-
     player.handleInput(allowedKeys[e.keyCode]);
 });
 
