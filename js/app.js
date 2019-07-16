@@ -16,6 +16,11 @@ var Enemy = function(x, y, speed) {
 Enemy.prototype.update = function(dt) {
     this.x = this.x + this.speed * dt;
 
+    if ((Math.abs(player.x - this.x) < 40)  && (Math.abs(player.y - this.y) < 20)) {
+        player.x = 200;
+        player.y = 375;
+    }
+
     if (this.x > 470) {
         this.x = -70;
         this.speed = Math.floor(Math.random() * 300 + 50);
@@ -34,8 +39,12 @@ Enemy.prototype.update = function(dt) {
 
 };
 
+Enemy.prototype.checkCollision = function(x1, x2, y1, y2) {
+    
+}
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
+    console.log(player.x, player.y);
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
@@ -47,6 +56,11 @@ var Player = function(x, y) {
 
 Player.prototype.update = function() {
     document.onkeydown = this.handleInput;
+    if (this.y < 0) {
+        setTimeout(function() {
+        player = new Player(200, 375);
+        }, 500);
+    }
     
 
 }
@@ -56,19 +70,16 @@ Player.prototype.render = function() {
 }
 
 Player.prototype.handleInput = function(e) {
-    if (e.keyCode == '38') {
+    if (e.keyCode == '38' && player.y > -34) {
         player.y = (player.y - 82);   // width of pixels is 82
     }
     else if (e.keyCode == '40') {
-        console.log(this.y);
         player.y = (player.y + 82);
     }
     else if (e.keyCode == '37') {
-        console.log(player.x);
         player.x = (player.x - 101);  // height of pixels is 101 
     }
     else if (e.keyCode == '39') {
-       console.log(player.x);
        player.x = (player.x + 101);
     }
 };
@@ -115,3 +126,4 @@ document.addEventListener('keyup', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
+
