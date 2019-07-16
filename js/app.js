@@ -67,6 +67,7 @@ Player.prototype.update = function() {
 
 Player.prototype.render = function() {
     console.log(player.counter);
+    document.getElementById('counter').innerText = "Score " + player.counter;
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
 
