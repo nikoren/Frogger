@@ -61,7 +61,7 @@ Player.prototype.update = function() {
         let new_counter = player.counter + 1;
         setTimeout(function() {
         player = new Player(200, 375, new_counter);
-        }, 500);
+        }, 200);
     }
 }
 
