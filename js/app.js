@@ -70,16 +70,21 @@ Player.prototype.render = function() {
 }
 
 Player.prototype.handleInput = function(e) {
+    // going up 
     if (e.keyCode == '38' && player.y > -34) {
         player.y = (player.y - 82);   // width of pixels is 82
     }
-    else if (e.keyCode == '40') {
+
+    // going down 
+    else if (e.keyCode == '40' && player.y < 300) {
         player.y = (player.y + 82);
     }
-    else if (e.keyCode == '37') {
+
+    // going left 
+    else if (e.keyCode == '37' && player.x > 0) {
         player.x = (player.x - 101);  // height of pixels is 101 
     }
-    else if (e.keyCode == '39') {
+    else if (e.keyCode == '39' && player.x < 401) {
        player.x = (player.x + 101);
     }
 };
