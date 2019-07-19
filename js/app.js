@@ -112,14 +112,18 @@ let allEnemies = [];
 let randNumber
 let vertical
 
-for (let i = 0; i<3; i++) {
-    randNumber = Math.floor(Math.random() * 3);
 
+// Manually generating enemies to show collision at the second the game starts 
+
+allEnemies.push(new Enemy(-70, 65, 360))
+allEnemies.push(new Enemy(100, 65, 220))
+
+
+// Generating enemies 
+for (let i = 0; i<2; i++) {
+    randNumber = Math.floor(Math.random() * 2);
 
     if (randNumber == 0) {
-        vertical = 65;    // the top-most row
-    }
-    else if (randNumber == 1) {
         vertical = 145;
     }
     else {
