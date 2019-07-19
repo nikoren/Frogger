@@ -10,6 +10,7 @@ var Enemy = function(x, y, speed) {
     this.y = y;
     this.speed = speed;
     let all_x
+    let result 
 };
 
 // Update the enemy's position, required method for game
@@ -23,9 +24,19 @@ Enemy.prototype.update = function(dt) {
         player.y = 375;
     }
 
+    for (let enem of allEnemies) {
+        for (let enem2 of allEnemies) {
+            result = enem.x - enem2.x 
+            if ((result > 0 && result < 100) && (enem.x !== enem2.x)) {
+                enem.speed = 500;
+            }
+        }
+    }
+
+
     if (this.x > 470) {
         this.x = -70;
-        this.speed = Math.floor(Math.random() * 300 + 50);
+        this.speed = Math.floor(Math.random() * 250 + 50);
         let randNumber = Math.floor(Math.random() * 3);
         if (randNumber == 0) {
             this.y = 65;    // the top-most row
@@ -49,15 +60,6 @@ Enemy.prototype.checkCollision = function(x1, x2, y1, y2) {
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 
-    all_x = [allEnemies[0].x, allEnemies[1].x,  allEnemies[2].x,allEnemies[3].x,  allEnemies[4].x];
-    for (let enem of allEnemies) {
-        for (let enem2 of allEnemies) {
-            if ((Math.abs(enem.x - enem2.x) < 80) && (enem.x !== enem2.x)) {
-                enem.speed = enem2.speed;
-                
-            }
-        }
-    }
 
 };
 
@@ -107,9 +109,12 @@ Player.prototype.handleInput = function(e) {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 let allEnemies = [];
+let randNumber
+let vertical
 
-for (let i = 0; i<5; i++) {
-    let randNumber = Math.floor(Math.random() * 3);
+for (let i = 0; i<3; i++) {
+    randNumber = Math.floor(Math.random() * 3);
+
 
     if (randNumber == 0) {
         vertical = 65;    // the top-most row
@@ -123,7 +128,8 @@ for (let i = 0; i<5; i++) {
     // choosing the speed 
     let speed = Math.floor(Math.random() * 400 + 50);
 
-    allEnemies.push(new Enemy(-70, vertical, speed));
+
+    setTimeout(function() {allEnemies.push(new Enemy(-70, vertical, speed));}, 10)
 }
 
 let player = new Player(200, 375);
