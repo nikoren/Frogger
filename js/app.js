@@ -18,12 +18,21 @@ var Enemy = function(x, y, speed) {
 Enemy.prototype.update = function(dt) {
     this.x = this.x + this.speed * dt;
 
+    this.checkCollision();
+
+    this.border();
+
     if ((Math.abs(player.x - this.x) < 40)  && (Math.abs(player.y - this.y) < 20)) {
         player.counter = 0;
         player.x = 200;
         player.y = 375;
     }
 
+
+
+};
+// Check if enenemies collide with other enemies 
+Enemy.prototype.checkCollision = function() {
     for (let enem of allEnemies) {
         for (let enem2 of allEnemies) {
             result = enem.x - enem2.x 
@@ -35,8 +44,9 @@ Enemy.prototype.update = function(dt) {
             }
         }
     }
-
-
+}
+// Check if enemies extend the border 
+Enemy.prototype.border = function() {
     if (this.x > 470) {
         this.x = -200;
         this.speed = Math.floor(Math.random() * 300 + 50);
@@ -51,14 +61,8 @@ Enemy.prototype.update = function(dt) {
             this.y = 225;
         }
     }
-
-    this.checkCollision();
-
-
-};
-Enemy.prototype.checkCollision = function(x1, x2, y1, y2) {
-
 }
+
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
@@ -87,6 +91,7 @@ Player.prototype.render = function() {
     document.getElementById('counter').innerText = "Score " + player.counter;
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
+
 
 Player.prototype.handleInput = function(e) {
     // going up 
