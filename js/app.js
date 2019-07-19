@@ -9,6 +9,7 @@ var Enemy = function(x, y, speed) {
     this.x = x;
     this.y = y;
     this.speed = speed;
+    let all_x
 };
 
 // Update the enemy's position, required method for game
@@ -37,15 +38,26 @@ Enemy.prototype.update = function(dt) {
         }
     }
 
+    this.checkCollision();
+
 
 };
-
 Enemy.prototype.checkCollision = function(x1, x2, y1, y2) {
-    
+
 }
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+
+    all_x = [allEnemies[0].x, allEnemies[1].x,  allEnemies[2].x,allEnemies[3].x,  allEnemies[4].x];
+    for (let enem of allEnemies) {
+        for (let enem2 of allEnemies) {
+            if ((Math.abs(enem.x - enem2.x) < 10) && (enem.x !== enem2.x)) {
+                enem.x -= 80;
+            }
+        }
+    }
+
 };
 
 var Player = function(x, y, counter=0) {
@@ -66,7 +78,6 @@ Player.prototype.update = function() {
 }
 
 Player.prototype.render = function() {
-    console.log(player.counter);
     document.getElementById('counter').innerText = "Score " + player.counter;
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
@@ -97,9 +108,6 @@ Player.prototype.handleInput = function(e) {
 let allEnemies = [];
 
 for (let i = 0; i<5; i++) {
-
-    // this code creates an enemy 
-    // choosing the vertical position 
     let randNumber = Math.floor(Math.random() * 3);
 
     if (randNumber == 0) {
@@ -109,13 +117,12 @@ for (let i = 0; i<5; i++) {
         vertical = 145;
     }
     else {
-    vertical = 225;
+        vertical = 225;
     }
     // choosing the speed 
-    let speed = Math.floor(Math.random() * 300 + 50);
+    let speed = Math.floor(Math.random() * 400 + 50);
 
     allEnemies.push(new Enemy(-70, vertical, speed));
-
 }
 
 let player = new Player(200, 375);
@@ -132,4 +139,5 @@ document.addEventListener('keyup', function(e) {
     };
     player.handleInput(allowedKeys[e.keyCode]);
 });
+
 
