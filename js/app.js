@@ -9,6 +9,8 @@ var Enemy = function(x, y, speed) {
     this.x = x;
     this.y = y;
     this.speed = speed;
+    let all_x
+    let result 
 };
 
 // Update the enemy's position, required method for game
@@ -16,14 +18,37 @@ var Enemy = function(x, y, speed) {
 Enemy.prototype.update = function(dt) {
     this.x = this.x + this.speed * dt;
 
+    this.checkCollision();
+
+    this.border();
+
     if ((Math.abs(player.x - this.x) < 40)  && (Math.abs(player.y - this.y) < 20)) {
         player.counter = 0;
         player.x = 200;
         player.y = 375;
     }
 
+
+
+};
+// Check if enenemies collide with other enemies 
+Enemy.prototype.checkCollision = function() {
+    for (let enem of allEnemies) {
+        for (let enem2 of allEnemies) {
+            result = enem.x - enem2.x 
+            if (result > 0 && result < 100 && enem.y == enem2.y && enem.x !== enem2.x) {
+                if (enem2.speed == 500) {
+                    enem2.speed = 300;
+                }
+                enem.speed = 500;
+            }
+        }
+    }
+}
+// Check if enemies extend the border 
+Enemy.prototype.border = function() {
     if (this.x > 470) {
-        this.x = -70;
+        this.x = -200;
         this.speed = Math.floor(Math.random() * 300 + 50);
         let randNumber = Math.floor(Math.random() * 3);
         if (randNumber == 0) {
@@ -36,16 +61,13 @@ Enemy.prototype.update = function(dt) {
             this.y = 225;
         }
     }
-
-
-};
-
-Enemy.prototype.checkCollision = function(x1, x2, y1, y2) {
-    
 }
+
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+
+
 };
 
 var Player = function(x, y, counter=0) {
@@ -66,10 +88,10 @@ Player.prototype.update = function() {
 }
 
 Player.prototype.render = function() {
-    console.log(player.counter);
     document.getElementById('counter').innerText = "Score " + player.counter;
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
+
 
 Player.prototype.handleInput = function(e) {
     // going up 
@@ -95,28 +117,17 @@ Player.prototype.handleInput = function(e) {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 let allEnemies = [];
+let randNumber
+let vertical
 
-for (let i = 0; i<5; i++) {
 
-    // this code creates an enemy 
-    // choosing the vertical position 
-    let randNumber = Math.floor(Math.random() * 3);
+// Manually generating enemies to show collision at the second the game starts 
 
-    if (randNumber == 0) {
-        vertical = 65;    // the top-most row
-    }
-    else if (randNumber == 1) {
-        vertical = 145;
-    }
-    else {
-    vertical = 225;
-    }
-    // choosing the speed 
-    let speed = Math.floor(Math.random() * 300 + 50);
-
-    allEnemies.push(new Enemy(-70, vertical, speed));
-
-}
+allEnemies.push(new Enemy(-70, 65, 360))
+allEnemies.push(new Enemy(100, 65, 220))
+allEnemies.push(new Enemy(70, 145, 156))
+allEnemies.push(new Enemy(100, 225, 80))
+allEnemies.push(new Enemy(200, 225, 200))
 
 let player = new Player(200, 375);
 
@@ -132,4 +143,5 @@ document.addEventListener('keyup', function(e) {
     };
     player.handleInput(allowedKeys[e.keyCode]);
 });
+
 
