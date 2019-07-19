@@ -27,7 +27,7 @@ Enemy.prototype.update = function(dt) {
     for (let enem of allEnemies) {
         for (let enem2 of allEnemies) {
             result = enem.x - enem2.x 
-            if ((result > 0 && result < 100) && (enem.x !== enem2.x)) {
+            if (result > 0 && result < 100 && enem.y == enem2.y && enem.x !== enem2.x) {
                 enem.speed = 500;
             }
         }
@@ -35,7 +35,7 @@ Enemy.prototype.update = function(dt) {
 
 
     if (this.x > 470) {
-        this.x = -70;
+        this.x = -120;
         this.speed = Math.floor(Math.random() * 250 + 50);
         let randNumber = Math.floor(Math.random() * 3);
         if (randNumber == 0) {
