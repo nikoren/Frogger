@@ -52,8 +52,9 @@ Enemy.prototype.render = function() {
     all_x = [allEnemies[0].x, allEnemies[1].x,  allEnemies[2].x,allEnemies[3].x,  allEnemies[4].x];
     for (let enem of allEnemies) {
         for (let enem2 of allEnemies) {
-            if ((Math.abs(enem.x - enem2.x) < 10) && (enem.x !== enem2.x)) {
-                enem.x -= 80;
+            if ((Math.abs(enem.x - enem2.x) < 80) && (enem.x !== enem2.x)) {
+                enem.speed = enem2.speed;
+                
             }
         }
     }
