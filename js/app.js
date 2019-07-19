@@ -28,6 +28,9 @@ Enemy.prototype.update = function(dt) {
         for (let enem2 of allEnemies) {
             result = enem.x - enem2.x 
             if (result > 0 && result < 100 && enem.y == enem2.y && enem.x !== enem2.x) {
+                if (enem2.speed == 500) {
+                    enem2.speed = 300;
+                }
                 enem.speed = 500;
             }
         }
@@ -35,8 +38,8 @@ Enemy.prototype.update = function(dt) {
 
 
     if (this.x > 470) {
-        this.x = -120;
-        this.speed = Math.floor(Math.random() * 250 + 50);
+        this.x = -200;
+        this.speed = Math.floor(Math.random() * 300 + 50);
         let randNumber = Math.floor(Math.random() * 3);
         if (randNumber == 0) {
             this.y = 65;    // the top-most row
@@ -117,24 +120,9 @@ let vertical
 
 allEnemies.push(new Enemy(-70, 65, 360))
 allEnemies.push(new Enemy(100, 65, 220))
-
-
-// Generating enemies 
-for (let i = 0; i<2; i++) {
-    randNumber = Math.floor(Math.random() * 2);
-
-    if (randNumber == 0) {
-        vertical = 145;
-    }
-    else {
-        vertical = 225;
-    }
-    // choosing the speed 
-    let speed = Math.floor(Math.random() * 400 + 50);
-
-
-    setTimeout(function() {allEnemies.push(new Enemy(-70, vertical, speed));}, 10)
-}
+allEnemies.push(new Enemy(70, 145, 156))
+allEnemies.push(new Enemy(100, 225, 80))
+allEnemies.push(new Enemy(200, 225, 200))
 
 let player = new Player(200, 375);
 
